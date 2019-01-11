@@ -1,0 +1,15 @@
+main {
+	width: 1000px;
+	height: 650px;
+	border: 1px solid black;
+	position: relative;
+}
+
+.paddle {
+	height: 20px;
+	width: 100px;
+	background-color: brown;
+	position: absolute;
+	bottom: 5px;
+	left: 450px;
+}
