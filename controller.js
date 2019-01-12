@@ -7,17 +7,21 @@ const createPaddle = function (document, screen) {
 	return { paddle, paddleDiv };
 }
 
-const controlPaddle = function (document, screen, paddleDiv, paddle) {
-	drawPaddle(paddleDiv, paddle);
-	screen.onkeydown = movePaddle.bind(null, document, paddle);
-}
-
 const createBall = function (document, screen) {
 	let ball = new Ball(20, 20, 600, 470);
 	let ballDiv = document.createElement('div');
 	ballDiv.className = 'ball';
 	ballDiv.id = 'ball_1';
 	screen.appendChild(ballDiv);
+	return { ball, ballDiv };
+}
+
+const controlPaddle = function (document, screen, paddleDiv, paddle) {
+	drawPaddle(paddleDiv, paddle);
+	screen.onkeydown = movePaddle.bind(null, document, paddle);
+}
+
+const accelarateBall = function (ball, ballDiv) {
 	const keepBallMoving = function () {
 		stopBall(ball, ballIntervalId);
 		ball.move();
@@ -31,8 +35,9 @@ const createGame = function (document) {
 	screen.tabIndex = "0";
 	screen.focus();
 	let { paddle, paddleDiv } = createPaddle(document, screen);
+	let { ball, ballDiv } = createBall(document, screen);
 	controlPaddle(document, screen, paddleDiv, paddle);
-	createBall(document, screen);
+	accelarateBall(ball, ballDiv);
 }
 
 const addPxUnit = (value) => value + "px";
