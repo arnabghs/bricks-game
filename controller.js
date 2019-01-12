@@ -31,10 +31,14 @@ const controlMovementOfBall = function (ball, ballDiv, paddle, wall) {
 		stopBall(ball, ballIntervalId);
 		ball.move();
 		drawBall(ballDiv, ball);
-		checkCollisionWithPaddle(ball, paddle);
-		checkCollisionWithWall(ball, wall);
+		handleCollisionOfBall(ball, paddle, wall);
 	}
 	let ballIntervalId = setInterval(keepBallMoving, 50);
+}
+
+const handleCollisionOfBall = function (ball, paddle, wall) {
+	handleCollisionWithPaddle(ball, paddle);
+	handleCollisionWithWall(ball, wall);
 }
 
 const startGame = function (document) {
@@ -48,7 +52,7 @@ const startGame = function (document) {
 	controlMovementOfBall(ball, ballDiv, paddle, wall);
 }
 
-const checkCollisionWithPaddle = function (ball, paddle) {
+const handleCollisionWithPaddle = function (ball, paddle) {
 	if (ball.positionY < paddle.positionY + paddle.height &&
 		paddle.positionX <= ball.positionX + 15 &&
 		ball.positionX <= paddle.positionX + paddle.width) {
@@ -56,7 +60,7 @@ const checkCollisionWithPaddle = function (ball, paddle) {
 	}
 }
 
-const checkCollisionWithWall = function (ball, wall) {
+const handleCollisionWithWall = function (ball, wall) {
 	if (ball.positionX < wall.leftPosition) ball.velocity.x = (-1) * ball.velocity.x;
 	if (ball.positionX + ball.width > wall.rightPosition) ball.velocity.x = (-1) * ball.velocity.x;
 	if (ball.positionY + ball.height > wall.topPosition) ball.velocity.y = (-1) * ball.velocity.y;
