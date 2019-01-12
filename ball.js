@@ -6,9 +6,11 @@ class Ball {
 		this.positionX = positionX;
 	}
 
-	move() {
-		this.positionX = this.positionX + 3;
-		this.positionY = this.positionY - 5;
+	move(speed, direction) {
+		if (direction[0] == 'up') this.positionY = this.positionY + speed[0];
+		if (direction[0] == 'down') this.positionY = this.positionY - speed[0];
+		if (direction[1] == 'right') this.positionX = this.positionX + speed[1];
+		if (direction[1] == 'left') this.positionX = this.positionX - speed[1];
 	}
 }
 

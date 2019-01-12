@@ -24,7 +24,9 @@ const controlPaddle = function (document, screen, paddleDiv, paddle) {
 const accelarateBall = function (ball, ballDiv) {
 	const keepBallMoving = function () {
 		stopBall(ball, ballIntervalId);
-		ball.move();
+		let speed = [5, 2];
+		let direction = ['down', 'left'];
+		ball.move(speed, direction);
 		drawBall(ballDiv, ball);
 	}
 	let ballIntervalId = setInterval(keepBallMoving, 100);
