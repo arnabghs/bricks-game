@@ -8,7 +8,7 @@ const createPaddle = function (document, screen) {
 }
 
 const createBall = function (document, screen) {
-	let ball = new Ball(20, 20, 600, 470);
+	let ball = new Ball(20, 20, 600, 470, { x: 2, y: 5 });
 	let ballDiv = document.createElement('div');
 	ballDiv.className = 'ball';
 	ballDiv.id = 'ball_1';
@@ -21,25 +21,32 @@ const controlPaddle = function (document, screen, paddleDiv, paddle) {
 	screen.onkeydown = movePaddle.bind(null, document, paddle);
 }
 
-const accelarateBall = function (ball, ballDiv) {
+const controlMovementOfBall = function (ball, ballDiv, paddle) {
 	const keepBallMoving = function () {
 		stopBall(ball, ballIntervalId);
-		let speed = [5, 2];
-		let direction = ['down', 'left'];
-		ball.move(speed, direction);
+		ball.move();
 		drawBall(ballDiv, ball);
+		checkCollisionWithPaddle(ball, paddle);
 	}
 	let ballIntervalId = setInterval(keepBallMoving, 100);
 }
 
-const createGame = function (document) {
+const startGame = function (document) {
 	let screen = document.getElementById('screen');
 	screen.tabIndex = "0";
 	screen.focus();
 	let { paddle, paddleDiv } = createPaddle(document, screen);
 	let { ball, ballDiv } = createBall(document, screen);
 	controlPaddle(document, screen, paddleDiv, paddle);
-	accelarateBall(ball, ballDiv);
+	controlMovementOfBall(ball, ballDiv, paddle);
+}
+
+const checkCollisionWithPaddle = function (ball, paddle) {
+	console.log(paddle.positionX);
+	if (ball.positionY < paddle.positionY + paddle.height &&
+		paddle.positionX <= ball.positionX + 15 && ball.positionX <= paddle.positionX + paddle.width) {
+		ball.velocity.y = (-1) * ball.velocity.y;
+	}
 }
 
 const addPxUnit = (value) => value + "px";
@@ -59,7 +66,7 @@ const drawBall = function (ballDiv, ball) {
 }
 
 const initialise = function () {
-	createGame(document);
+	startGame(document);
 }
 
 window.onload = initialise;
