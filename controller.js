@@ -4,6 +4,10 @@ const createPaddle = function (document, screen) {
 	paddleDiv.className = 'paddle';
 	paddleDiv.id = 'paddle_1';
 	screen.appendChild(paddleDiv);
+	return { paddle, paddleDiv };
+}
+
+const controlPaddle = function (document, screen, paddleDiv, paddle) {
 	drawPaddle(paddleDiv, paddle);
 	screen.onkeydown = movePaddle.bind(null, document, paddle);
 }
@@ -19,13 +23,15 @@ const createBall = function (document, screen) {
 		ball.move();
 		drawBall(ballDiv, ball);
 	}
-	let ballIntervalId = setInterval(keepBallMoving, 10);
+	let ballIntervalId = setInterval(keepBallMoving, 100);
 }
 
 const createGame = function (document) {
 	let screen = document.getElementById('screen');
 	screen.tabIndex = "0";
-	createPaddle(document, screen);
+	screen.focus();
+	let { paddle, paddleDiv } = createPaddle(document, screen);
+	controlPaddle(document, screen, paddleDiv, paddle);
 	createBall(document, screen);
 }
 
