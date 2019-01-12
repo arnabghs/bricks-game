@@ -13,12 +13,28 @@ const createWall = function () {
 }
 
 const createBall = function (document, screen) {
-	let ball = new Ball(20, 20, 600, 370, { x: 5, y: 5 });
+	let ball = new Ball(20, 600, 370, { x: 5, y: 5 });
 	let ballDiv = document.createElement('div');
 	ballDiv.className = 'ball';
 	ballDiv.id = 'ball_1';
 	screen.appendChild(ballDiv);
 	return { ball, ballDiv };
+}
+
+const addPxUnit = (value) => value + "px";
+
+const drawPaddle = function (paddleDiv, paddle) {
+	paddleDiv.style.height = addPxUnit(paddle.height);
+	paddleDiv.style.width = addPxUnit(paddle.width);
+	paddleDiv.style.bottom = addPxUnit(paddle.positionY);
+	paddleDiv.style.left = addPxUnit(paddle.positionX);
+}
+
+const drawBall = function (ballDiv, ball) {
+	ballDiv.style.height = addPxUnit(ball.diameter);
+	ballDiv.style.width = addPxUnit(ball.diameter);
+	ballDiv.style.bottom = addPxUnit(ball.positionY);
+	ballDiv.style.left = addPxUnit(ball.positionX);
 }
 
 const controlPaddle = function (document, screen, paddleDiv, paddle) {
@@ -33,12 +49,26 @@ const controlMovementOfBall = function (ball, ballDiv, paddle, wall) {
 		drawBall(ballDiv, ball);
 		handleCollisionOfBall(ball, paddle, wall);
 	}
-	let ballIntervalId = setInterval(keepBallMoving, 50);
+	let ballIntervalId = setInterval(keepBallMoving, 30);
 }
 
 const handleCollisionOfBall = function (ball, paddle, wall) {
 	handleCollisionWithPaddle(ball, paddle);
 	handleCollisionWithWall(ball, wall);
+}
+
+const handleCollisionWithPaddle = function (ball, paddle) {
+	if (ball.positionY < paddle.positionY + paddle.height &&
+		paddle.positionX <= ball.positionX + ball.diameter &&
+		ball.positionX <= paddle.positionX + paddle.width) {
+		ball.velocity.y = (-1) * ball.velocity.y;
+	}
+}
+
+const handleCollisionWithWall = function (ball, wall) {
+	if (ball.positionX < wall.leftPosition) ball.velocity.x = (-1) * ball.velocity.x;
+	if (ball.positionX + ball.diameter > wall.rightPosition) ball.velocity.x = (-1) * ball.velocity.x;
+	if (ball.positionY + ball.diameter > wall.topPosition) ball.velocity.y = (-1) * ball.velocity.y;
 }
 
 const startGame = function (document) {
@@ -50,36 +80,6 @@ const startGame = function (document) {
 	let wall = createWall();
 	controlPaddle(document, screen, paddleDiv, paddle);
 	controlMovementOfBall(ball, ballDiv, paddle, wall);
-}
-
-const handleCollisionWithPaddle = function (ball, paddle) {
-	if (ball.positionY < paddle.positionY + paddle.height &&
-		paddle.positionX <= ball.positionX + 15 &&
-		ball.positionX <= paddle.positionX + paddle.width) {
-		ball.velocity.y = (-1) * ball.velocity.y;
-	}
-}
-
-const handleCollisionWithWall = function (ball, wall) {
-	if (ball.positionX < wall.leftPosition) ball.velocity.x = (-1) * ball.velocity.x;
-	if (ball.positionX + ball.width > wall.rightPosition) ball.velocity.x = (-1) * ball.velocity.x;
-	if (ball.positionY + ball.height > wall.topPosition) ball.velocity.y = (-1) * ball.velocity.y;
-}
-
-const addPxUnit = (value) => value + "px";
-
-const drawPaddle = function (paddleDiv, paddle) {
-	paddleDiv.style.height = addPxUnit(paddle.height);
-	paddleDiv.style.width = addPxUnit(paddle.width);
-	paddleDiv.style.bottom = addPxUnit(paddle.positionY);
-	paddleDiv.style.left = addPxUnit(paddle.positionX);
-}
-
-const drawBall = function (ballDiv, ball) {
-	ballDiv.style.height = addPxUnit(ball.height);
-	ballDiv.style.width = addPxUnit(ball.width);
-	ballDiv.style.bottom = addPxUnit(ball.positionY);
-	ballDiv.style.left = addPxUnit(ball.positionX);
 }
 
 const initialise = function () {
