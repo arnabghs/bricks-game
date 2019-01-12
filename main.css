@@ -10,3 +10,10 @@ main {
 	background-color: brown;
 	position: absolute;
 }
+
+.ball {
+	border: 1px solid black;
+	border-radius: 50%;
+	background-color: chartreuse;
+	position: absolute;
+}
