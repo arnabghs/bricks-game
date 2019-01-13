@@ -1,23 +1,24 @@
 class Paddle {
-	constructor(height, width, positionY, positionX) {
+	constructor(height, width, positionY, positionX, speed) {
 		this.height = height;
 		this.width = width;
 		this.positionY = positionY;
 		this.positionX = positionX;
+		this.speed = speed;
 	}
 
 	moveRight() {
-		this.positionX = (this.positionX + 15) % 910;
+		this.positionX = (this.positionX + this.speed) % 900;
 	}
 	moveLeft() {
-		this.positionX = this.positionX - 15;
+		this.positionX = this.positionX - this.speed;
 		if (this.positionX < 0) this.positionX = 900;
 	}
 	moveUp() {
-		this.positionY += 5;
+		this.positionY += this.speed;
 	}
 	moveDown() {
-		this.positionY -= 5;
+		this.positionY -= this.speed;
 		if (this.positionY < 0) this.positionY = 0;
 	}
 }

@@ -1,5 +1,5 @@
 const createPaddle = function (document, screen) {
-	let paddle = new Paddle(20, 100, 5, 450);
+	let paddle = new Paddle(20, 100, 5, 450, 10);
 	let paddleDiv = document.createElement('div');
 	paddleDiv.className = 'paddle';
 	paddleDiv.id = 'paddle_1';
@@ -8,21 +8,35 @@ const createPaddle = function (document, screen) {
 }
 
 const createWall = function () {
-	let wall = new Wall(0, 1000, 650);
+	let wall = new Wall(0, 1004, 655);
 	return wall;
 }
 
-const createBrickUnit = function (document, screen) {
-	let brick = new Brick(50, 15, 0, 632, 'unhit');
+const createBrickUnit = function (document, screen, positionX, positionY) {
+	let brick = new Brick(50, 20, positionX, positionY, 'unhit');
 	let brickDiv = document.createElement('div');
 	brickDiv.className = 'brick';
-	brickDiv.id = 'brick_1';
+	//brickDiv.id = 'brick_1';
 	screen.appendChild(brickDiv);
 	return { brick, brickDiv };
 }
 
+const createBricks = function (document, screen) {
+	let positionX = 0;
+	let positionY = 632;
+	for (let row = 0; row < 15; row++) {
+		for (let column = 0; column < 20; column++) {
+			let { brick, brickDiv } = createBrickUnit(document, screen, positionX, positionY);
+			drawBrick(brickDiv, brick);
+			positionX += 50;
+		}
+		positionY -= 20;
+		positionX = 0;
+	}
+}
+
 const createBall = function (document, screen) {
-	let ball = new Ball(20, 600, 370, { x: 5, y: 5 });
+	let ball = new Ball(20, 50, 460, { x: 5, y: -5 });
 	let ballDiv = document.createElement('div');
 	ballDiv.className = 'ball';
 	ballDiv.id = 'ball_1';
@@ -65,7 +79,7 @@ const controlMovementOfBall = function (ball, ballDiv, paddle, wall) {
 		drawBall(ballDiv, ball);
 		handleCollisionOfBall(ball, paddle, wall);
 	}
-	let ballIntervalId = setInterval(keepBallMoving, 30);
+	let ballIntervalId = setInterval(keepBallMoving, 100);
 }
 
 const startGame = function (document) {
@@ -74,9 +88,8 @@ const startGame = function (document) {
 	screen.focus();
 	let { paddle, paddleDiv } = createPaddle(document, screen);
 	let { ball, ballDiv } = createBall(document, screen);
-	let { brick, brickDiv } = createBrickUnit(document, screen);
 	let wall = createWall();
-	drawBrick(brickDiv, brick);
+	createBricks(document, screen);
 	controlPaddle(document, screen, paddleDiv, paddle);
 	controlMovementOfBall(ball, ballDiv, paddle, wall);
 }

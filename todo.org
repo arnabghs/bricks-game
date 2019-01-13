@@ -1,3 +1,4 @@
 * game.js
  * look at handleCollisionWithPaddle
  * look at handleCollisionWithWall
+ * look at nested for loop in createBricks function
