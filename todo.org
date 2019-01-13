@@ -1,0 +1,3 @@
+* game.js
+ * look at handleCollisionWithPaddle
+ * look at handleCollisionWithWall

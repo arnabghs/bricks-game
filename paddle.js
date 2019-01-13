@@ -7,10 +7,10 @@ class Paddle {
 	}
 
 	moveRight() {
-		this.positionX = (this.positionX + 10) % 910;
+		this.positionX = (this.positionX + 15) % 910;
 	}
 	moveLeft() {
-		this.positionX = this.positionX - 10;
+		this.positionX = this.positionX - 15;
 		if (this.positionX < 0) this.positionX = 900;
 	}
 	moveUp() {
@@ -18,6 +18,7 @@ class Paddle {
 	}
 	moveDown() {
 		this.positionY -= 5;
+		if (this.positionY < 0) this.positionY = 0;
 	}
 }
 
