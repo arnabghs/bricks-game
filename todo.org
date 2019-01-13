@@ -1,4 +1,11 @@
 * game.js
  * look at handleCollisionWithPaddle
  * look at handleCollisionWithWall
+ * very ugly -> handleCollisionWithBricks
+
+* controller.js
  * look at nested for loop in createBricks function
+ * reduce startGame function
+
+* apply physics at collisions
+* manner of ball & brick collision is not consistent

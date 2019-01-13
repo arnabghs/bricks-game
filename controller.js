@@ -8,31 +8,38 @@ const createPaddle = function (document, screen) {
 }
 
 const createWall = function () {
-	let wall = new Wall(0, 1004, 655);
+	let wall = new Wall(0, 1002, 654);
 	return wall;
 }
 
-const createBrickUnit = function (document, screen, positionX, positionY) {
-	let brick = new Brick(50, 20, positionX, positionY, 'unhit');
+const createBrickUnit = function (document, screen, positionX, positionY, id) {
+	let brick = new Brick(50, 20, positionX, positionY);
 	let brickDiv = document.createElement('div');
 	brickDiv.className = 'brick';
-	//brickDiv.id = 'brick_1';
+	brickDiv.id = `brick_${id}`;
 	screen.appendChild(brickDiv);
 	return { brick, brickDiv };
 }
 
 const createBricks = function (document, screen) {
+	let allBricks = [];
+	let allBrickDivs = [];
 	let positionX = 0;
 	let positionY = 632;
+	let id = 1;
 	for (let row = 0; row < 15; row++) {
 		for (let column = 0; column < 20; column++) {
-			let { brick, brickDiv } = createBrickUnit(document, screen, positionX, positionY);
+			let { brick, brickDiv } = createBrickUnit(document, screen, positionX, positionY, id);
+			allBricks.push(brick);
+			allBrickDivs.push(brickDiv);
 			drawBrick(brickDiv, brick);
 			positionX += 50;
+			id++;
 		}
 		positionY -= 20;
 		positionX = 0;
 	}
+	return { allBricks, allBrickDivs };
 }
 
 const createBall = function (document, screen) {
@@ -72,14 +79,14 @@ const controlPaddle = function (document, screen, paddleDiv, paddle) {
 	screen.onkeydown = movePaddle.bind(null, document, paddle);
 }
 
-const controlMovementOfBall = function (ball, ballDiv, paddle, wall) {
+const controlMovementOfBall = function (ball, ballDiv, paddle, wall, bricks, brickDivs) {
 	const keepBallMoving = function () {
 		stopBall(ball, ballIntervalId);
 		ball.move();
 		drawBall(ballDiv, ball);
-		handleCollisionOfBall(ball, paddle, wall);
+		handleCollisionOfBall(ball, paddle, wall, bricks, brickDivs);
 	}
-	let ballIntervalId = setInterval(keepBallMoving, 100);
+	let ballIntervalId = setInterval(keepBallMoving, 50);
 }
 
 const startGame = function (document) {
@@ -89,9 +96,9 @@ const startGame = function (document) {
 	let { paddle, paddleDiv } = createPaddle(document, screen);
 	let { ball, ballDiv } = createBall(document, screen);
 	let wall = createWall();
-	createBricks(document, screen);
+	let { allBricks, allBrickDivs } = createBricks(document, screen);
 	controlPaddle(document, screen, paddleDiv, paddle);
-	controlMovementOfBall(ball, ballDiv, paddle, wall);
+	controlMovementOfBall(ball, ballDiv, paddle, wall, allBricks, allBrickDivs);
 }
 
 const initialise = function () {

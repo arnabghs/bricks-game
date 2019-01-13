@@ -1,6 +1,6 @@
 main {
-	width: 1004px;
-	height: 655px;
+	width: 1002px;
+	height: 654px;
 	border: 1px solid black;
 	position: relative;
 }
@@ -20,7 +20,7 @@ main {
 }
 
 .brick {
-	border: 2px solid darkred;
+	border: 1px solid darkred;
 	position: absolute;
 	background-color: coral;
 	z-index: -1;
