@@ -5,4 +5,7 @@ class Brick {
 		this.positionX = positionX;
 		this.positionY = positionY;
 	}
+	handleCollision(){
+		
+	}
 }

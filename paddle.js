@@ -27,4 +27,24 @@ class Paddle {
 		if (key == 'ArrowUp') this.moveUp();
 		if (key == 'ArrowDown') this.moveDown();
 	}
+
+	isObjectInsideLeftEdge(object) {
+		return this.positionX <= object.positionX + object.diameter;
+	}
+
+	isObjectInsideRightEdge(object) {
+		return object.positionX <= this.positionX + this.width;
+	}
+
+	isObjectInBoundOfPaddle(object) {
+		return (this.isObjectInsideLeftEdge(object) && this.isObjectInsideRightEdge(object));
+	}
+
+	isObjectTouchingTopEdge(object) {
+		return (object.positionY - (object.diameter / 2) < this.positionY + this.height);
+	}
+
+	hasCollided(collidingObject) {
+		return (this.isObjectTouchingTopEdge(collidingObject) && this.isObjectInBoundOfPaddle(collidingObject));
+	}
 }

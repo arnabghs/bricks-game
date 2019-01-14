@@ -10,6 +10,14 @@ class Ball {
 		this.positionY = this.positionY - this.velocity.y;
 		this.positionX = this.positionX - this.velocity.x;
 	}
+
+	toggleVerticalDirection() {
+		this.velocity.y = (-1) * this.velocity.y;
+	}
+
+	toggleHorizontalDirection() {
+		this.velocity.x = (-1) * this.velocity.x;
+	}
 }
 
 const stopBall = function (ball, intervalId) {

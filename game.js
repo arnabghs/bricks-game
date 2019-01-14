@@ -5,16 +5,11 @@ const handleCollisionOfBall = function (ball, paddle, wall, bricks, brickDivs) {
 }
 
 const handleCollisionWithPaddle = function (ball, paddle) {
-	if (ball.positionY < paddle.positionY + paddle.height &&
-		paddle.positionX <= ball.positionX + ball.diameter &&
-		ball.positionX <= paddle.positionX + paddle.width) {
-		ball.velocity.y = (-1) * ball.velocity.y;
-	}
+	if (paddle.hasCollided(ball)) ball.toggleVerticalDirection();
 }
+
 const handleCollisionWithWall = function (ball, wall) {
-	if (ball.positionX < wall.leftPosition) ball.velocity.x = (-1) * ball.velocity.x;
-	if (ball.positionX + ball.diameter > wall.rightPosition) ball.velocity.x = (-1) * ball.velocity.x;
-	if (ball.positionY + ball.diameter > wall.topPosition) ball.velocity.y = (-1) * ball.velocity.y;
+	wall.handleCollision(ball);
 }
 
 const handleCollisionWithBricks = function (ball, bricks, brickDivs) {
