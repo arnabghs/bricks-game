@@ -1,4 +1,4 @@
-* TODO game.js
+* DONE game.js
  * look at handleCollisionWithPaddle
  * look at handleCollisionWithWall
  * very ugly -> handleCollisionWithBricks

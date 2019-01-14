@@ -1,5 +1,5 @@
 const createPaddle = function (document, screen) {
-	let paddle = new Paddle(20, 100, 5, 450, 10);
+	let paddle = new Paddle(20, 100, 5, 450, 20);
 	let paddleDiv = document.createElement('div');
 	paddleDiv.className = 'paddle';
 	paddleDiv.id = 'paddle_1';
@@ -91,7 +91,14 @@ const controlMovementOfBall = function (ball, ballDiv, paddle, wall, bricks, bri
 		stopBall(ball, ballIntervalId);
 		ball.move();
 		drawBall(ballDiv, ball);
-		handleCollisionOfBall(ball, paddle, wall, bricks, brickDivs);
+		handleCollisionOfBall(ball, paddle, wall);
+
+		let brickIndex = handleCollisionWithBricks(ball, bricks);
+		if (brickDivs[brickIndex]) {  //to get rid of console error
+			let brick = document.getElementById(brickDivs[brickIndex].id);
+			brick.parentNode.removeChild(brick);
+			if (brick !== null) ball.toggleVerticalDirection();
+		}
 	}
 	let ballIntervalId = setInterval(keepBallMoving, 50);
 }

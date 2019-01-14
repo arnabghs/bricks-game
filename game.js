@@ -1,7 +1,6 @@
-const handleCollisionOfBall = function (ball, paddle, wall, bricks, brickDivs) {
+const handleCollisionOfBall = function (ball, paddle, wall) {
 	handleCollisionWithPaddle(ball, paddle);
 	handleCollisionWithWall(ball, wall);
-	handleCollisionWithBricks(ball, bricks, brickDivs);
 }
 
 const handleCollisionWithPaddle = function (ball, paddle) {
@@ -12,15 +11,10 @@ const handleCollisionWithWall = function (ball, wall) {
 	wall.handleCollision(ball);
 }
 
-const handleCollisionWithBricks = function (ball, bricks, brickDivs) {
+const handleCollisionWithBricks = function (ball, bricks) {
 	for (index in bricks) {
-		if (ball.positionY + (ball.diameter / 2) > bricks[index].positionY - 5 &&
-			ball.positionY + (ball.diameter / 2) < bricks[index].positionY + bricks[index].height + 5 &&
-			ball.positionX + (ball.diameter / 2) > bricks[index].positionX - 5 &&
-			ball.positionX + (ball.diameter / 2) < bricks[index].positionX + bricks[index].width + 5) {
-			let brick = document.getElementById(brickDivs[index].id);
-			brick.parentNode.removeChild(brick);
-			ball.velocity.y = (-1) * ball.velocity.y;
+		if (bricks[index].handleCollision(ball)) {
+			return index;
 		}
 	}
 }
