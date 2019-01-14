@@ -74,6 +74,13 @@ const drawBrick = function (brickDiv, brick) {
 	brickDiv.style.left = addPxUnit(brick.positionX);
 }
 
+const movePaddle = function (document, paddle) {
+	let key = event.key;
+	let paddleDiv = document.getElementById('paddle_1');
+	paddle.slide(key);
+	drawPaddle(paddleDiv, paddle);
+}
+
 const controlPaddle = function (document, screen, paddleDiv, paddle) {
 	drawPaddle(paddleDiv, paddle);
 	screen.onkeydown = movePaddle.bind(null, document, paddle);
@@ -105,4 +112,4 @@ const initialise = function () {
 	startGame(document);
 }
 
-window.onload = initialise;
+window.onload = initialise; 

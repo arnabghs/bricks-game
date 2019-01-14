@@ -7,7 +7,6 @@ const handleCollisionOfBall = function (ball, paddle, wall, bricks, brickDivs) {
 const handleCollisionWithPaddle = function (ball, paddle) {
 	if (ball.positionY < paddle.positionY + paddle.height &&
 		paddle.positionX <= ball.positionX + ball.diameter &&
-
 		ball.positionX <= paddle.positionX + paddle.width) {
 		ball.velocity.y = (-1) * ball.velocity.y;
 	}
