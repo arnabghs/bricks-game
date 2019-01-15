@@ -6,6 +6,8 @@
 * TODO controller.js
  * look at nested for loop in createBricks function
  * reduce startGame function
+ * reduce controlMovementOfBall function
+ * reduce createBricks function
 
 * TODO apply physics at collisions
 * TODO manner of ball & brick collision is not consistent

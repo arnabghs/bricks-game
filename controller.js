@@ -94,9 +94,9 @@ const controlMovementOfBall = function (ball, ballDiv, paddle, wall, bricks, bri
 		handleCollisionOfBall(ball, paddle, wall);
 
 		let brickIndex = handleCollisionWithBricks(ball, bricks);
-		if (brickDivs[brickIndex]) {  //to get rid of console error
+		if (brickDivs[brickIndex]) {  //to get rid of 'undefined' console error
 			let brick = document.getElementById(brickDivs[brickIndex].id);
-			brick.parentNode.removeChild(brick);
+			if (brick !== null) brick.parentNode.removeChild(brick); //to get rid of 'null' console error
 			if (brick !== null) ball.toggleVerticalDirection();
 		}
 	}
